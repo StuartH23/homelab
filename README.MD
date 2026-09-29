@@ -1,6 +1,6 @@
 # Homelab Terraform Lab
 
-I am learning Terraform and DevOps by deploying an AWS-style infrastructure lab to LocalStack on a separate amd64 homelab server. I write and review the configuration on my PC, store it in GitHub, then run Terraform against LocalStack on the server. The application is outside the scope of this first lab.
+I am learning Terraform and DevOps by deploying an AWS-style infrastructure lab to LocalStack on a separate Ubuntu amd64 homelab server. I write and review the configuration on my PC, store it in GitHub, then run Terraform against LocalStack on the server. The application is outside the scope of this first lab.
 
 ## How the lab fits together
 
@@ -28,20 +28,16 @@ The subnet ranges are `10.0.0.0/22`, `10.0.4.0/22`, and `10.0.8.0/22`. These are
 
 ## Prerequisites on the homelab server
 
-- An amd64 machine with [Docker](https://docs.docker.com/engine/install/) running.
+- An Ubuntu amd64 machine with [Docker](https://docs.docker.com/engine/install/ubuntu/) running.
 - [Terraform CLI](https://developer.hashicorp.com/terraform/install).
 - [LocalStack `lstk` CLI](https://docs.localstack.cloud/aws/developer-tools/running-localstack/lstk/).
 - Git to clone this repository.
 
 ### Install `lstk`
 
-Use LocalStack's official [`lstk` installation instructions](https://docs.localstack.cloud/aws/developer-tools/running-localstack/lstk/#installation). They offer Homebrew, npm, and [pre-built binaries](https://github.com/localstack/lstk/releases). On the amd64 server, choose the binary that matches its operating system and architecture, then put it on your `PATH`. If Homebrew is already installed on the server, the documented command is:
+On my Ubuntu amd64 server, I installed `lstk` from LocalStack's pre-built binary release rather than through a package manager. To repeat that setup, follow the [official installation instructions](https://docs.localstack.cloud/aws/developer-tools/running-localstack/lstk/#installation): open the [release downloads](https://github.com/localstack/lstk/releases), select the archive named `lstk_<version>_linux_amd64.tar.gz`, extract it, and place the `lstk` executable in a directory on your `PATH`.
 
-```sh
-brew install localstack/tap/lstk
-```
-
-Verify the installation with `lstk --version`. LocalStack also requires Docker and a LocalStack account/license; see the [official prerequisites](https://docs.localstack.cloud/aws/developer-tools/running-localstack/lstk/#prerequisites). Confirm the other tools with `docker --version` and `terraform version`. The exact method used on this server will be recorded here after it has been verified.
+Verify the installation with `lstk --version`. LocalStack also requires Docker and a LocalStack account/license; see the [official prerequisites](https://docs.localstack.cloud/aws/developer-tools/running-localstack/lstk/#prerequisites). Confirm the other tools with `docker --version` and `terraform version`.
 
 ## Manual LocalStack deployment
 
