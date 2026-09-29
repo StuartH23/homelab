@@ -33,7 +33,15 @@ The subnet ranges are `10.0.0.0/22`, `10.0.4.0/22`, and `10.0.8.0/22`. These are
 - [LocalStack `lstk` CLI](https://docs.localstack.cloud/aws/developer-tools/running-localstack/lstk/).
 - Git to clone this repository.
 
-Follow the installation instructions for the server's operating system in those links. Confirm the tools are available with `docker --version`, `terraform version`, and `lstk --version`. The exact server installation commands will be documented after they have been verified on that machine.
+### Install `lstk`
+
+Use LocalStack's official [`lstk` installation instructions](https://docs.localstack.cloud/aws/developer-tools/running-localstack/lstk/#installation). They offer Homebrew, npm, and [pre-built binaries](https://github.com/localstack/lstk/releases). On the amd64 server, choose the binary that matches its operating system and architecture, then put it on your `PATH`. If Homebrew is already installed on the server, the documented command is:
+
+```sh
+brew install localstack/tap/lstk
+```
+
+Verify the installation with `lstk --version`. LocalStack also requires Docker and a LocalStack account/license; see the [official prerequisites](https://docs.localstack.cloud/aws/developer-tools/running-localstack/lstk/#prerequisites). Confirm the other tools with `docker --version` and `terraform version`. The exact method used on this server will be recorded here after it has been verified.
 
 ## Manual LocalStack deployment
 
