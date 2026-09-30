@@ -116,6 +116,21 @@ If an earlier run used the default `us-east-1` region, destroy that run with `ls
 
 Terraform state and local configuration files are excluded by `.gitignore`. Do not commit credentials, LocalStack auth tokens, state files, or server addresses.
 
+## Results from a manual run
+
+I applied this configuration to LocalStack in `us-east-2` and checked the resources with `lstk aws`:
+
+| Check | Observed result |
+| --- | --- |
+| VPC | `app1-vpc` was available with CIDR `10.0.0.0/20` |
+| Subnet 1 | `10.0.0.0/22` in `us-east-2a`; 1,019 available addresses |
+| Subnet 2 | `10.0.4.0/22` in `us-east-2b`; 1,019 available addresses |
+| Subnet 3 | `10.0.8.0/22` in `us-east-2c`; 1,019 available addresses |
+| DynamoDB | `app1-dynamodb` was `ACTIVE` with `PAY_PER_REQUEST` billing in `us-east-2` |
+| IAM | `devsuperuser` had the AWS-managed `ReadOnlyAccess` policy attached |
+
+I then ran `lstk terraform --region us-east-2 destroy` to clean up the Terraform-managed resources. Generated resource IDs, account IDs, and server details are omitted from this record.
+
 ## Next steps
 
 After the manual deployment and cleanup work reliably on the server, I plan to automate the same workflow with GitHub Actions.
