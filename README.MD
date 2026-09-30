@@ -1,6 +1,11 @@
 # Homelab Terraform Lab
 
-I am learning Terraform and DevOps by deploying an AWS-style infrastructure lab to LocalStack on a separate Ubuntu amd64 homelab server. I write and review the configuration on my PC, store it in GitHub, then run Terraform against LocalStack on the server. The application is outside the scope of this first lab.
+I am learning Terraform and DevOps by deploying an AWS-style infrastructure lab to
+LocalStack on a separate Ubuntu amd64 homelab server. I write and review the
+configuration on my PC, store it in GitHub, then run Terraform against LocalStack on the
+server. The application is outside the scope of this first lab.
+I am using AI but in a co development role to bring me to the documentation
+and help me learn what and why certain variables are needed see comments on the main.tf
 
 ## How the lab fits together
 
@@ -31,13 +36,28 @@ The subnet ranges are `10.0.0.0/22`, `10.0.4.0/22`, and `10.0.8.0/22`. These are
 - An Ubuntu amd64 machine with [Docker](https://docs.docker.com/engine/install/ubuntu/) running.
 - [Terraform CLI](https://developer.hashicorp.com/terraform/install).
 - [LocalStack `lstk` CLI](https://docs.localstack.cloud/aws/developer-tools/running-localstack/lstk/).
+- [AWS CLI](https://docs.aws.amazon.com/cli/latest/userguide/getting-started-install.html) for the verification commands below.
 - Git to clone this repository.
+- [GitHub CLI (`gh`)](https://cli.github.com/manual/installation) to authenticate and clone this private repository.
 
 ### Install `lstk`
 
 On my Ubuntu amd64 server, I installed `lstk` from LocalStack's pre-built binary release rather than through a package manager. To repeat that setup, follow the [official installation instructions](https://docs.localstack.cloud/aws/developer-tools/running-localstack/lstk/#installation): open the [release downloads](https://github.com/localstack/lstk/releases), select the archive named `lstk_<version>_linux_amd64.tar.gz`, extract it, and place the `lstk` executable in a directory on your `PATH`.
 
 Verify the installation with `lstk --version`. LocalStack also requires Docker and a LocalStack account/license; see the [official prerequisites](https://docs.localstack.cloud/aws/developer-tools/running-localstack/lstk/#prerequisites). Confirm the other tools with `docker --version` and `terraform version`.
+
+## Get the repository on the server
+
+This repository is currently private, so sign in to GitHub as `StuartH23` on the server and clone it:
+
+```sh
+gh auth login
+gh api user --jq .login
+gh repo clone StuartH23/homelab
+cd homelab
+```
+
+The account check should print `StuartH23`. Follow the interactive login prompts; do not put GitHub tokens in this repository.
 
 ## Manual LocalStack deployment
 
