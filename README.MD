@@ -48,16 +48,16 @@ Verify the installation with `lstk --version`. LocalStack also requires Docker a
 
 ## Get the repository on the server
 
-This repository is currently private, so sign in to GitHub as `StuartH23` on the server and clone it. The server does not need a browser: `gh auth login` displays a one-time code and a URL. Open that URL on your PC, enter the code, and authorize the login there.
+If the repository is private, authenticate with GitHub before cloning it. A headless server does not need a browser. Run `gh auth login` in its terminal, choose **Login with a web browser**, then open the URL shown by `gh` on another device. Enter the one-time code shown in the server terminal and complete the authorization in that device's browser. See the [GitHub CLI authentication guide](https://cli.github.com/manual/gh_auth_login).
 
 ```sh
 gh auth login --hostname github.com --git-protocol https
 gh api user --jq .login
-gh repo clone StuartH23/homelab
-cd homelab
+gh repo clone OWNER/REPO
+cd REPO
 ```
 
-The account check should print `StuartH23`. Follow the interactive login prompts; do not put GitHub tokens in this repository.
+Replace `OWNER/REPO` and `REPO` with the repository's owner and name. The account check prints the signed-in GitHub username. For an interactive, one-time clone, use the browser flow; a manually created personal access token is unnecessary. Never copy a one-time code, token, or credential into this README or a commit.
 
 ## Manual LocalStack deployment
 
