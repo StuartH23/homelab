@@ -63,6 +63,9 @@ sudo usermod -aG docker "$USER"
 
 After reconnecting, `docker info` should work **without** `sudo` before running `lstk start`. Docker documents this in its [Linux post-installation guide](https://docs.docker.com/engine/install/linux-postinstall/). Membership in the `docker` group grants root-level control of the host.
 
+If access is still denied after reconnecting, run `id -nG`; the current shell may not yet list `docker`.
+Run `newgrp docker`, then retry `docker info` and `lstk start` in that same shell.
+
 ## Get the repository on the server
 
 If the repository is private, authenticate with GitHub before cloning it. A headless server does not need a browser. Run `gh auth login` in its terminal, choose **Login with a web browser**, then open the URL shown by `gh` on another device. Enter the one-time code shown in the server terminal and complete the authorization in that device's browser. See the [GitHub CLI authentication guide](https://cli.github.com/manual/gh_auth_login).
