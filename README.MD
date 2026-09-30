@@ -48,10 +48,10 @@ Verify the installation with `lstk --version`. LocalStack also requires Docker a
 
 ## Get the repository on the server
 
-This repository is currently private, so sign in to GitHub as `StuartH23` on the server and clone it:
+This repository is currently private, so sign in to GitHub as `StuartH23` on the server and clone it. The server does not need a browser: `gh auth login` displays a one-time code and a URL. Open that URL on your PC, enter the code, and authorize the login there.
 
 ```sh
-gh auth login
+gh auth login --hostname github.com --git-protocol https
 gh api user --jq .login
 gh repo clone StuartH23/homelab
 cd homelab
