@@ -46,6 +46,23 @@ On my Ubuntu amd64 server, I installed `lstk` from LocalStack's pre-built binary
 
 Verify the installation with `lstk --version`. LocalStack also requires Docker and a LocalStack account/license; see the [official prerequisites](https://docs.localstack.cloud/aws/developer-tools/running-localstack/lstk/#prerequisites). Confirm the other tools with `docker --version` and `terraform version`.
 
+### Check Docker access
+
+Docker must be running before `lstk start`. Check whether the current user can reach the Docker daemon:
+
+```sh
+docker info
+```
+
+If that reports permission denied for `/var/run/docker.sock`, run `sudo docker info`. If the command works with `sudo`, the daemon is running and the user needs socket access. On this single-user lab server, add the user to the `docker` group, disconnect the SSH session, and reconnect:
+
+```sh
+sudo docker info
+sudo usermod -aG docker "$USER"
+```
+
+After reconnecting, `docker info` should work **without** `sudo` before running `lstk start`. Docker documents this in its [Linux post-installation guide](https://docs.docker.com/engine/install/linux-postinstall/). Membership in the `docker` group grants root-level control of the host.
+
 ## Get the repository on the server
 
 If the repository is private, authenticate with GitHub before cloning it. A headless server does not need a browser. Run `gh auth login` in its terminal, choose **Login with a web browser**, then open the URL shown by `gh` on another device. Enter the one-time code shown in the server terminal and complete the authorization in that device's browser. See the [GitHub CLI authentication guide](https://cli.github.com/manual/gh_auth_login).
