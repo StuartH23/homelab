@@ -85,30 +85,32 @@ Start LocalStack on the server, then run the Terraform commands from the cloned 
 
 ```sh
 lstk start
-lstk terraform init
+lstk terraform --region us-east-2 init
 terraform fmt -check
-lstk terraform validate
-lstk terraform plan
-lstk terraform apply
+lstk terraform --region us-east-2 validate
+lstk terraform --region us-east-2 plan
+lstk terraform --region us-east-2 apply
 ```
 
-Review the plan before accepting the apply. [`lstk terraform`](https://docs.localstack.cloud/aws/connecting/infrastructure-as-code/terraform/) points the AWS provider at LocalStack. Use it for `plan`, `apply`, and `destroy` in this lab so those commands target the local emulator.
+Review the plan before accepting the apply. [`lstk terraform`](https://docs.localstack.cloud/aws/connecting/infrastructure-as-code/terraform/) points the AWS provider at LocalStack. Its default region is `us-east-1`, so specify `--region us-east-2` before each Terraform action to match this lab's ticket. Use the same region for `plan`, `apply`, and `destroy`.
 
 Check the resources after applying:
 
 ```sh
-lstk aws ec2 describe-vpcs
-lstk aws ec2 describe-subnets
-lstk aws dynamodb describe-table --table-name app1-dynamodb
-lstk aws iam get-user --user-name devsuperuser
-lstk aws iam list-attached-user-policies --user-name devsuperuser
+lstk aws ec2 describe-vpcs --region us-east-2
+lstk aws ec2 describe-subnets --region us-east-2
+lstk aws dynamodb describe-table --region us-east-2 --table-name app1-dynamodb
+lstk aws iam get-user --region us-east-2 --user-name devsuperuser
+lstk aws iam list-attached-user-policies --region us-east-2 --user-name devsuperuser
 ```
 
 When finished, remove the Terraform-managed resources:
 
 ```sh
-lstk terraform destroy
+lstk terraform --region us-east-2 destroy
 ```
+
+If an earlier run used the default `us-east-1` region, destroy that run with `lstk terraform --region us-east-1 destroy` before deploying again in `us-east-2`.
 
 Terraform state and local configuration files are excluded by `.gitignore`. Do not commit credentials, LocalStack auth tokens, state files, or server addresses.
 
