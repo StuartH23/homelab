@@ -97,12 +97,14 @@ Review the plan before accepting the apply. [`lstk terraform`](https://docs.loca
 Check the resources after applying:
 
 ```sh
-lstk aws ec2 describe-vpcs --region us-east-2
-lstk aws ec2 describe-subnets --region us-east-2
-lstk aws dynamodb describe-table --region us-east-2 --table-name app1-dynamodb
-lstk aws iam get-user --region us-east-2 --user-name devsuperuser
-lstk aws iam list-attached-user-policies --region us-east-2 --user-name devsuperuser
+lstk aws ec2 describe-vpcs --region us-east-2 --filters Name=tag:Name,Values=app1-vpc
+lstk aws ec2 describe-subnets --region us-east-2 --filters Name=tag:Name,Values=app1-subnet-1,app1-subnet-2,app1-subnet-3 --query 'Subnets[].{Name:Tags[0].Value,CIDR:CidrBlock,AZ:AvailabilityZone,Available:AvailableIpAddressCount}' --output table
+lstk aws dynamodb describe-table --region us-east-2 --table-name app1-dynamodb --query 'Table.{Name:TableName,ARN:TableArn,Status:TableStatus,Billing:BillingModeSummary.BillingMode}'
+lstk aws iam get-user --region us-east-2 --user-name devsuperuser --query 'User.UserName'
+lstk aws iam list-attached-user-policies --region us-east-2 --user-name devsuperuser --query 'AttachedPolicies[].PolicyName'
 ```
+
+The subnet table should show `10.0.0.0/22`, `10.0.4.0/22`, and `10.0.8.0/22` in `us-east-2a`, `us-east-2b`, and `us-east-2c`, with 1,019 available addresses each. The DynamoDB summary should show `app1-dynamodb` as `ACTIVE` with `PAY_PER_REQUEST` billing and a `us-east-2` ARN. The IAM policy list should show `ReadOnlyAccess`.
 
 When finished, remove the Terraform-managed resources:
 
