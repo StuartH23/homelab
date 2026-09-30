@@ -130,7 +130,3 @@ I applied this configuration to LocalStack in `us-east-2` and checked the resour
 | IAM | `devsuperuser` had the AWS-managed `ReadOnlyAccess` policy attached |
 
 I then ran `lstk terraform --region us-east-2 destroy` to clean up the Terraform-managed resources. Generated resource IDs, account IDs, and server details are omitted from this record.
-
-## Next steps
-
-After the manual deployment and cleanup work reliably on the server, I plan to automate the same workflow with GitHub Actions.
